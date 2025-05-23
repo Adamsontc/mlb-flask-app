@@ -1,0 +1,167 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* Global Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f5f7fa;
+    color: #1e1e2f;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Header / Branding */
+.site-header {
+    text-align: center;
+    padding: 30px 20px 10px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+}
+
+.site-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: #1e1e2f;
+}
+
+.site-title .amp {
+    color: #e63946;
+}
+
+/* Navbar */
+.nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 12px;
+}
+
+.nav-links a {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #555;
+    transition: all 0.3s ease;
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.nav-links a:hover {
+    color: #e63946;
+}
+
+.nav-links a::after {
+    content: "";
+    display: block;
+    width: 0%;
+    height: 2px;
+    background: #e63946;
+    transition: width 0.3s;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Headings */
+h2 {
+    text-align: center;
+    margin: 40px 0 20px;
+    color: #1e1e2f;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    max-width: 1100px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 14px 18px;
+    text-align: center;
+    border-bottom: 1px solid #ececec;
+}
+
+th {
+    background-color: #e63946;
+    color: #fff;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9fb;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Division Headers */
+.division-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin: 40px auto 10px;
+    text-align: center;
+}
+
+/* Betting Odds List */
+ul {
+    list-style-type: none;
+    padding: 0;
+    max-width: 800px;
+    margin: 30px auto;
+}
+
+li {
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-left: 6px solid #e63946;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    border-radius: 10px;
+}
+
+.matchup {
+    font-weight: 600;
+    font-size: 18px;
+    color: #1e1e2f;
+    margin-bottom: 10px;
+}
+
+.team-odds {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    table th, table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .site-title {
+        font-size: 2rem;
+    }
+}

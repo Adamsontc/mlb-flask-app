@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Major League Baseball Standings</title>
+</head>
+<body>
+    <header class="site-header">
+  <h1 class="site-title">Barrels<span class="amp">&</span>Bytes</h1>
+  <nav class="nav-links">
+    <a href="{{ url_for('teams') }}">Teams</a>
+    <a href="{{ url_for('odds') }}">Odds</a>
+  </nav>
+</header>
+
+
+<h2>Team Standings by Division</h2>
+
+    {% for division, teams in standings.items() %}
+    <section class="division-section">
+        <h3>{{ division }}</h3>
+        <table class="standings-table">
+            <thead>
+                <tr>
+                    <th>Team</th>
+                    <th>Wins</th>
+                    <th>Losses</th>
+                    <th>Win %</th>
+                    <th>Record</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, row in teams.iterrows() %}
+                <tr>
+                    <td>{{ row['Tm'] }}</td>
+                    <td>{{ row['W'] }}</td>
+                    <td>{{ row['L'] }}</td>
+                    <td>{{ row['W-L%'] }}</td>
+                    <td>{{ row['W'] }}-{{ row['L'] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    {% endfor %}
+
+    <h2>Team Stats</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Team</th>
+      <th>AVG</th>
+      <th>SLG</th>
+      <th>OBP</th>
+      <th>OPS</th>
+      <th>ERA</th>
+      <th>WHIP</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in stats %}
+    <tr>
+      <td>{{ row['Team'] }}</td>
+      <td>{{ row['AVG'] }}</td>
+      <td>{{ row['SLG'] }}</td>
+      <td>{{ row['OBP'] }}</td>
+      <td>{{ row['OPS'] }}</td>
+      <td>{{ row['ERA'] }}</td>
+      <td>{{ row['WHIP'] }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+</body>
+</html>

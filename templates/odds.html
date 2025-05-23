@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MLB Betting Odds</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- Unified Header -->
+    <header class="site-header">
+        <h1 class="site-title">Barrels<span class="amp">&</span>Bytes</h1>
+        <nav class="nav-links">
+            <a href="{{ url_for('teams') }}">Teams</a>
+            <a href="{{ url_for('odds') }}" class="active">Odds</a>
+        </nav>
+    </header>
+
+    <h2>Today's MLB Betting Odds</h2>
+
+    {% if odds %}
+        <ul class="odds-list">
+            {% for matchup, odds_data in odds.items() %}
+                <li>
+                    <div class="matchup">{{ matchup }}</div>
+                    <div class="team-odds">
+                        {% for team, price in odds_data.items() %}
+                            <span>{{ team }}: {{ price }}</span><br>
+                        {% endfor %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p style="text-align:center; margin-top: 40px;">No odds available at this time. Please try again later.</p>
+    {% endif %}
+
+</body>
+</html>
