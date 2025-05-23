@@ -3,8 +3,17 @@ from pybaseball import standings, team_batting, team_pitching
 from datetime import datetime
 import pandas as pd
 import requests
+import pybaseball.datahelpers  # Required for patching session
 
 app = Flask(__name__)
+
+# 🛠️ Patch pybaseball to include headers (to bypass anti-bot protection)
+session = requests.Session()
+session.headers.update({
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+})
+pybaseball.datahelpers.session = session
+
 
 def get_mlb_odds(api_key):
     url = 'https://api.the-odds-api.com/v4/sports/baseball_mlb/odds'
@@ -26,7 +35,6 @@ def get_mlb_odds(api_key):
     odds_dict = {}
 
     for game in data:
-        # 🧹 Filter by sport title just in case
         if game.get("sport_title") != "MLB":
             continue
 
@@ -37,7 +45,6 @@ def get_mlb_odds(api_key):
         if not game.get("bookmakers"):
             continue
 
-        # Use the first bookmaker's odds
         for bookmaker in game["bookmakers"]:
             for market in bookmaker["markets"]:
                 if market["key"] == "h2h":
@@ -48,13 +55,14 @@ def get_mlb_odds(api_key):
                     }
                     break
             if matchup in odds_dict:
-                break  # Stop once we've added odds for this matchup
+                break
 
     return odds_dict
 
+
 @app.route("/")
 def home():
-    return teams()  # Calls the function for `/teams`
+    return teams()
 
 
 @app.route("/teams")
@@ -68,7 +76,6 @@ def teams():
         standings_data = {
             div: df[['Tm', 'W', 'L', 'W-L%']]
             for div, df in zip(divisions, standings_list)
-            
         }
     except Exception as e:
         print("Error loading standings:", e)
@@ -90,12 +97,13 @@ def teams():
         stats=combined_stats.to_dict(orient='records')
     )
 
+
 @app.route("/odds")
 def odds():
-    # Get betting odds
     api_key = 'dd300f06e45994df5e8a64d8fe82981c'
     odds_dict = get_mlb_odds(api_key)
     return render_template("odds.html", odds=odds_dict)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
